@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Dimensionamento - Estruturação SCP</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        .header h1 {
+            color: #333;
+            margin: 0;
+            font-size: 28px;
+        }
+        .header p {
+            color: #666;
+            margin: 10px 0 0 0;
+            font-size: 16px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        .section h2 {
+            color: #333;
+            margin-top: 0;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .section h2::before {
+            content: "📋";
+            margin-right: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+        input[type="text"], input[type="email"], input[type="tel"], input[type="number"], 
+        select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .required {
+            color: #e74c3c;
+        }
+        .help-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        .btn-secondary {
+            background: #6c757d !important;
+        }
+        .btn-secondary:hover {
+            background: #5a6268 !important;
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+        }
+        .resultado-acoes {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .resultado-acoes button {
+            flex: 1;
+            min-width: 150px;
+        }
+        @media (max-width: 768px) {
+            .resultado-acoes {
+                flex-direction: column;
+            }
+            .resultado-acoes button {
+                width: 100%;
+            }
+        }
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ffeaa7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Formulário de Dimensionamento</h1>
+            <p>Estruturação de SCP (Sociedade em Conta de Participação)</p>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Importante:</strong> Este formulário coletará informações para dimensionamento adequado do projeto jurídico. Todas as informações serão tratadas com confidencialidade.
+        </div>
+
+        <form id="dimensionamentoForm">
+            <!-- SEÇÃO 1: DADOS DA EMPRESA -->
+            <div class="section">
+                <h2>Dados da Empresa</h2>
+                
+                <div class="form-group">
+                    <label for="empresaNome">Nome da Empresa <span class="required">*</span></label>
+                    <input type="text" id="empresaNome" name="empresaNome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="empresaCnpj">CNPJ</label>
+                    <input type="text" id="empresaCnpj" name="empresaCnpj" placeholder="00.000.000/0000-00">
+                </div>
+
+                <div class="form-group">
+                    <label for="responsavelNome">Nome do Responsável <span class="required">*</span></label>
+                    <input type="text" id="responsavelNome" name="responsavelNome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="responsavelEmail">E-mail do Responsável <span class="required">*</span></label>
+                    <input type="email" id="responsavelEmail" name="responsavelEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="responsavelTelefone">Telefone do Responsável <span class="required">*</span></label>
+                    <input type="tel" id="responsavelTelefone" name="responsavelTelefone" required>
+                </div>
+            </div>
+
+            <!-- SEÇÃO 2: ESTRUTURA DO NEGÓCIO -->
+            <div class="section">
+                <h2>Estrutura do Negócio</h2>
+                
+                <div class="form-group">
+                    <label for="modeloNegocio">Descreva o modelo de negócio da empresa <span class="required">*</span></label>
+                    <textarea id="modeloNegocio" name="modeloNegocio" required placeholder="Descreva detalhadamente os produtos/serviços oferecidos"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="faturamentoProjetado">Faturamento projetado para os próximos 12 meses <span class="required">*</span></label>
+                    <select id="faturamentoProjetado" name="faturamentoProjetado" required>
+                        <option value="">Selecione...</option>
+                        <option value="ate-100k">Até R$ 100.000</option>
+                        <option value="100k-500k">R$ 100.001 a R$ 500.000</option>
+                        <option value="500k-1m">R$ 500.001 a R$ 1.000.000</option>
+                        <option value="1m-5m">R$ 1.000.001 a R$ 5.000.000</option>
+                        <option value="5m-10m">R$ 5.000.001 a R$ 10.000.000</option>
+                        <option value="acima-10m">Acima de R$ 10.000.000</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="segmentoTecnologia">Qual segmento de tecnologia? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="software" name="segmentoTecnologia" value="software">
+                            <label for="software">Desenvolvimento de Software</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="ecommerce" name="segmentoTecnologia" value="ecommerce">
+                            <label for="ecommerce">E-commerce</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="fintech" name="segmentoTecnologia" value="fintech">
+                            <label for="fintech">Fintech</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="saas" name="segmentoTecnologia" value="saas">
+                            <label for="saas">SaaS</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="marketplace" name="segmentoTecnologia" value="marketplace">
+                            <label for="marketplace">Marketplace</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="outros" name="segmentoTecnologia" value="outros">
+                            <label for="outros">Outros</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEÇÃO 3: PARTICIPANTES E CAPTAÇÃO -->
+            <div class="section">
+                <h2>Participantes e Captação</h2>
+                
+                <div class="form-group">
+                    <label for="numeroParticipantes">Quantos participantes/investidores estão previstos? <span class="required">*</span></label>
+                    <select id="numeroParticipantes" name="numeroParticipantes" required>
+                        <option value="">Selecione...</option>
+                        <option value="2-5">2 a 5 participantes</option>
+                        <option value="6-10">6 a 10 participantes</option>
+                        <option value="11-20">11 a 20 participantes</option>
+                        <option value="21-50">21 a 50 participantes</option>
+                        <option value="acima-50">Acima de 50 participantes</option>
+                    </select>
+                    <div class="help-text">⚠️ Importante: Acima de 50 pode exigir registro na CVM</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipoInvestidores">Tipo de investidores <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="qualificados" name="tipoInvestidores" value="qualificados" required>
+                            <label for="qualificados">Apenas investidores qualificados</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="publico-geral" name="tipoInvestidores" value="publico-geral" required>
+                            <label for="publico-geral">Público em geral</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="mistos" name="tipoInvestidores" value="mistos" required>
+                            <label for="mistos">Mistos</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="valorTotal">Valor total a ser captado <span class="required">*</span></label>
+                    <select id="valorTotal" name="valorTotal" required>
+                        <option value="">Selecione...</option>
+                        <option value="ate-100k">Até R$ 100.000</option>
+                        <option value="100k-500k">R$ 100.001 a R$ 500.000</option>
+                        <option value="500k-1m">R$ 500.001 a R$ 1.000.000</option>
+                        <option value="1m-5m">R$ 1.000.001 a R$ 5.000.000</option>
+                        <option value="5m-10m">R$ 5.000.001 a R$ 10.000.000</option>
+                        <option value="acima-10m">Acima de R$ 10.000.000</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="formaCaptacao">Como será feita a captação de recursos? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="convite-direto" name="formaCaptacao" value="convite-direto">
+                            <label for="convite-direto">Convite direto</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="redes-sociais" name="formaCaptacao" value="redes-sociais">
+                            <label for="redes-sociais">Redes sociais</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="site-proprio" name="formaCaptacao" value="site-proprio">
+                            <label for="site-proprio">Site próprio</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="plataforma-digital" name="formaCaptacao" value="plataforma-digital">
+                            <label for="plataforma-digital">Plataforma digital</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-publicitario" name="formaCaptacao" value="material-publicitario">
+                            <label for="material-publicitario">Material publicitário</label>
+                        </div>
+                    </div>
+                    <div class="help-text">⚠️ Atenção: Captação pública pode exigir registro na CVM</div>
+                </div>
+            </div>
+
+            <!-- SEÇÃO 4: QUESTÕES REGULATÓRIAS CRÍTICAS -->
+            <div class="section">
+                <h2>Questões Regulatórias Críticas</h2>
+                
+                <div class="form-group">
+                    <label for="garantiaRentabilidade">Será oferecida garantia de rentabilidade ou promessa de retorno? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="garantia-sim" name="garantiaRentabilidade" value="sim" required>
+                            <label for="garantia-sim">Sim</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="garantia-nao" name="garantiaRentabilidade" value="nao" required>
+                            <label for="garantia-nao">Não</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cessaoCotas">Os investidores poderão ceder suas cotas para terceiros? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="cessao-sim" name="cessaoCotas" value="sim" required>
+                            <label for="cessao-sim">Sim</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="cessao-nao" name="cessaoCotas" value="nao" required>
+                            <label for="cessao-nao">Não</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="cessao-restricoes" name="cessaoCotas" value="com-restricoes" required>
+                            <label for="cessao-restricoes">Com restrições</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="materialMarketing">Será criado material de marketing/prospecto para investidores? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="marketing-sim" name="materialMarketing" value="sim" required>
+                            <label for="marketing-sim">Sim</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="marketing-nao" name="materialMarketing" value="nao" required>
+                            <label for="marketing-nao">Não</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEÇÃO 5: GESTÃO E OPERAÇÃO -->
+            <div class="section">
+                <h2>Gestão e Operação</h2>
+                
+                <div class="form-group">
+                    <label for="socioOstensivo">Quem será o sócio ostensivo? <span class="required">*</span></label>
+                    <textarea id="socioOstensivo" name="socioOstensivo" required placeholder="Nome/CNPJ de quem atuará como sócio ostensivo"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="distribuicaoLucros">Como será a distribuição de lucros? <span class="required">*</span></label>
+                    <textarea id="distribuicaoLucros" name="distribuicaoLucros" required placeholder="Descreva a forma e periodicidade da distribuição"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="relatoriosInvestidores">Haverá relatórios periódicos para investidores? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="relatorios-sim" name="relatoriosInvestidores" value="sim" required>
+                            <label for="relatorios-sim">Sim</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="relatorios-nao" name="relatoriosInvestidores" value="nao" required>
+                            <label for="relatorios-nao">Não</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEÇÃO 6: TIMELINE E ORÇAMENTO -->
+            <div class="section">
+                <h2>Timeline e Orçamento</h2>
+                
+                <div class="form-group">
+                    <label for="prazoInicio">Prazo para início das operações <span class="required">*</span></label>
+                    <select id="prazoInicio" name="prazoInicio" required>
+                        <option value="">Selecione...</option>
+                        <option value="imediato">Imediato (até 30 dias)</option>
+                        <option value="30-60">30 a 60 dias</option>
+                        <option value="60-90">60 a 90 dias</option>
+                        <option value="90-120">90 a 120 dias</option>
+                        <option value="acima-120">Acima de 120 dias</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="orcamentoJuridico">Orçamento disponível para estruturação jurídica <span class="required">*</span></label>
+                    <select id="orcamentoJuridico" name="orcamentoJuridico" required>
+                        <option value="">Selecione...</option>
+                        <option value="ate-10k">Até R$ 10.000</option>
+                        <option value="10k-25k">R$ 10.001 a R$ 25.000</option>
+                        <option value="25k-50k">R$ 25.001 a R$ 50.000</option>
+                        <option value="50k-100k">R$ 50.001 a R$ 100.000</option>
+                        <option value="acima-100k">Acima de R$ 100.000</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="preferenciaEscritorio">Preferência de escritório <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="local" name="preferenciaEscritorio" value="local" required>
+                            <label for="local">Local (Goiânia/GO)</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="nacional" name="preferenciaEscritorio" value="nacional" required>
+                            <label for="nacional">Nacional (trabalho remoto)</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="indiferente" name="preferenciaEscritorio" value="indiferente" required>
+                            <label for="indiferente">Indiferente</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEÇÃO 7: INFORMAÇÕES ADICIONAIS -->
+            <div class="section">
+                <h2>Informações Adicionais</h2>
+                
+                <div class="form-group">
+                    <label for="experienciaAnterior">A empresa já teve experiência com captação de recursos ou estruturas similares?</label>
+                    <textarea id="experienciaAnterior" name="experienciaAnterior" placeholder="Descreva experiências anteriores, se houver"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="preocupacoes">Principais preocupações ou dúvidas sobre o projeto</label>
+                    <textarea id="preocupacoes" name="preocupacoes" placeholder="Descreva suas principais preocupações regulatórias ou operacionais"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="observacoes">Observações gerais</label>
+                    <textarea id="observacoes" name="observacoes" placeholder="Qualquer informação adicional relevante"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">📊 Gerar Resumo Executivo</button>
+        </form>
+
+        <div id="resultado" style="display: none;">
+            <div class="section">
+                <h2>📋 Resumo das Informações Coletadas</h2>
+                <div id="resumoConteudo"></div>
+                <div class="resultado-acoes">
+                    <button onclick="copiarResumo()" class="submit-btn">
+                        📋 Copiar Resumo
+                    </button>
+                    <button onclick="baixarResumo()" class="submit-btn">
+                        💾 Baixar HTML
+                    </button>
+                    <button onclick="enviarEmail()" class="submit-btn">
+                        📧 Preparar Email
+                    </button>
+                    <button onclick="novoFormulario()" class="submit-btn btn-secondary">
+                        ↻ Novo Formulário
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let dadosFormulario = {};
+
+        document.getElementById('dimensionamentoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validação básica
+            const camposObrigatorios = ['empresaNome', 'responsavelNome', 'responsavelEmail', 'responsavelTelefone', 
+                                      'modeloNegocio', 'faturamentoProjetado', 'numeroParticipantes', 
+                                      'tipoInvestidores', 'valorTotal', 'garantiaRentabilidade', 
+                                      'cessaoCotas', 'materialMarketing', 'socioOstensivo', 
+                                      'distribuicaoLucros', 'relatoriosInvestidores', 'prazoInicio', 
+                                      'orcamentoJuridico', 'preferenciaEscritorio'];
+            
+            let camposFaltando = [];
+            camposObrigatorios.forEach(campo => {
+                const elemento = document.querySelector(`[name="${campo}"]`);
+                if (elemento && !elemento.value) {
+                    camposFaltando.push(elemento.previousElementSibling.textContent.replace(' *', ''));
+                }
+            });
+            
+            if (camposFaltando.length > 0) {
+                alert(`❌ Por favor, preencha os seguintes campos obrigatórios:\n\n${camposFaltando.join('\n')}`);
+                return;
+            }
+            
+            // Mostrar loading
+            const submitBtn = document.querySelector('.submit-btn[type="submit"]');
+            const textoOriginal = submitBtn.innerHTML;
+            submitBtn.innerHTML = '⏳ Processando...';
+            submitBtn.disabled = true;
+            
+            // Simular processamento
+            setTimeout(() => {
+                // Coletar todos os dados do formulário
+                const formData = new FormData(this);
+                dadosFormulario = {};
+                
+                // Processar dados simples
+                for (let [key, value] of formData.entries()) {
+                    if (dadosFormulario[key]) {
+                        // Se já existe, transformar em array
+                        if (Array.isArray(dadosFormulario[key])) {
+                            dadosFormulario[key].push(value);
+                        } else {
+                            dadosFormulario[key] = [dadosFormulario[key], value];
+                        }
+                    } else {
+                        dadosFormulario[key] = value;
+                    }
+                }
+                
+                // Gerar resumo formatado
+                gerarResumo();
+                
+                // Mostrar resultado e esconder formulário
+                document.getElementById('dimensionamentoForm').style.display = 'none';
+                document.getElementById('resultado').style.display = 'block';
+                
+                // Scroll para o topo
+                window.scrollTo(0, 0);
+                
+                // Restaurar botão
+                submitBtn.innerHTML = textoOriginal;
+                submitBtn.disabled = false;
+            }, 1000);
+        });
+
+        function gerarResumo() {
+            const agora = new Date();
+            const dataFormatada = agora.toLocaleDateString('pt-BR') + ' às ' + agora.toLocaleTimeString('pt-BR');
+            
+            let resumo = `
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                    <h3>📊 FORMULÁRIO DE DIMENSIONAMENTO - SCP</h3>
+                    <p><strong>Data/Hora:</strong> ${dataFormatada}</p>
+                    <p><strong>WDS Tecnologia</strong> - Assessoria Jurídica</p>
+                </div>
+
+                <div style="background: white; padding: 20px; border-radius: 10px; border: 1px solid #e1e5e9;">
+                    <h4>🏢 DADOS DA EMPRESA</h4>
+                    <p><strong>Empresa:</strong> ${dadosFormulario.empresaNome || 'Não informado'}</p>
+                    <p><strong>CNPJ:</strong> ${dadosFormulario.empresaCnpj || 'Não informado'}</p>
+                    <p><strong>Responsável:</strong> ${dadosFormulario.responsavelNome || 'Não informado'}</p>
+                    <p><strong>E-mail:</strong> ${dadosFormulario.responsavelEmail || 'Não informado'}</p>
+                    <p><strong>Telefone:</strong> ${dadosFormulario.responsavelTelefone || 'Não informado'}</p>
+
+                    <h4>💼 ESTRUTURA DO NEGÓCIO</h4>
+                    <p><strong>Modelo de Negócio:</strong> ${dadosFormulario.modeloNegocio || 'Não informado'}</p>
+                    <p><strong>Faturamento Projetado:</strong> ${formatarOpcao(dadosFormulario.faturamentoProjetado)}</p>
+                    <p><strong>Segmento:</strong> ${formatarArray(dadosFormulario.segmentoTecnologia)}</p>
+
+                    <h4>👥 PARTICIPANTES E CAPTAÇÃO</h4>
+                    <p><strong>Número de Participantes:</strong> ${formatarOpcao(dadosFormulario.numeroParticipantes)}</p>
+                    <p><strong>Tipo de Investidores:</strong> ${formatarOpcao(dadosFormulario.tipoInvestidores)}</p>
+                    <p><strong>Valor Total a Captar:</strong> ${formatarOpcao(dadosFormulario.valorTotal)}</p>
+                    <p><strong>Forma de Captação:</strong> ${formatarArray(dadosFormulario.formaCaptacao)}</p>
+
+                    <h4>⚖️ QUESTÕES REGULATÓRIAS CRÍTICAS</h4>
+                    <p><strong>Garantia de Rentabilidade:</strong> ${formatarOpcao(dadosFormulario.garantiaRentabilidade)} ${dadosFormulario.garantiaRentabilidade === 'sim' ? '⚠️ ATENÇÃO CVM' : ''}</p>
+                    <p><strong>Cessão de Cotas:</strong> ${formatarOpcao(dadosFormulario.cessaoCotas)}</p>
+                    <p><strong>Material de Marketing:</strong> ${formatarOpcao(dadosFormulario.materialMarketing)} ${dadosFormulario.materialMarketing === 'sim' ? '⚠️ ATENÇÃO CVM' : ''}</p>
+
+                    <h4>🔧 GESTÃO E OPERAÇÃO</h4>
+                    <p><strong>Sócio Ostensivo:</strong> ${dadosFormulario.socioOstensivo || 'Não informado'}</p>
+                    <p><strong>Distribuição de Lucros:</strong> ${dadosFormulario.distribuicaoLucros || 'Não informado'}</p>
+                    <p><strong>Relatórios para Investidores:</strong> ${formatarOpcao(dadosFormulario.relatoriosInvestidores)}</p>
+
+                    <h4>⏰ TIMELINE E ORÇAMENTO</h4>
+                    <p><strong>Prazo para Início:</strong> ${formatarOpcao(dadosFormulario.prazoInicio)}</p>
+                    <p><strong>Orçamento Jurídico:</strong> ${formatarOpcao(dadosFormulario.orcamentoJuridico)}</p>
+                    <p><strong>Preferência de Escritório:</strong> ${formatarOpcao(dadosFormulario.preferenciaEscritorio)}</p>
+
+                    ${dadosFormulario.experienciaAnterior ? `<h4>📚 INFORMAÇÕES ADICIONAIS</h4><p><strong>Experiência Anterior:</strong> ${dadosFormulario.experienciaAnterior}</p>` : ''}
+                    ${dadosFormulario.preocupacoes ? `<p><strong>Preocupações:</strong> ${dadosFormulario.preocupacoes}</p>` : ''}
+                    ${dadosFormulario.observacoes ? `<p><strong>Observações:</strong> ${dadosFormulario.observacoes}</p>` : ''}
+
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>🚨 ALERTAS REGULATÓRIOS</h4>
+                        ${gerarAlertas()}
+                    </div>
+
+                    <div style="background: #d4edda; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4>✅ PRÓXIMOS PASSOS RECOMENDADOS</h4>
+                        ${gerarProximosPassos()}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('resumoConteudo').innerHTML = resumo;
+        }
+
+        function formatarOpcao(valor) {
+            if (!valor) return 'Não informado';
+            
+            const opcoes = {
+                'ate-100k': 'Até R$ 100.000',
+                '100k-500k': 'R$ 100.001 a R$ 500.000',
+                '500k-1m': 'R$ 500.001 a R$ 1.000.000',
+                '1m-5m': 'R$ 1.000.001 a R$ 5.000.000',
+                '5m-10m': 'R$ 5.000.001 a R$ 10.000.000',
+                'acima-10m': 'Acima de R$ 10.000.000',
+                'ate-10k': 'Até R$ 10.000',
+                '10k-25k': 'R$ 10.001 a R$ 25.000',
+                '25k-50k': 'R$ 25.001 a R$ 50.000',
+                '50k-100k': 'R$ 50.001 a R$ 100.000',
+                'acima-100k': 'Acima de R$ 100.000',
+                '2-5': '2 a 5 participantes',
+                '6-10': '6 a 10 participantes',
+                '11-20': '11 a 20 participantes',
+                '21-50': '21 a 50 participantes',
+                'acima-50': 'Acima de 50 participantes',
+                'qualificados': 'Apenas investidores qualificados',
+                'publico-geral': 'Público em geral',
+                'mistos': 'Mistos',
+                'sim': 'Sim',
+                'nao': 'Não',
+                'com-restricoes': 'Com restrições',
+                'imediato': 'Imediato (até 30 dias)',
+                '30-60': '30 a 60 dias',
+                '60-90': '60 a 90 dias',
+                '90-120': '90 a 120 dias',
+                'acima-120': 'Acima de 120 dias',
+                'local': 'Local (Goiânia/GO)',
+                'nacional': 'Nacional (trabalho remoto)',
+                'indiferente': 'Indiferente'
+            };
+            
+            return opcoes[valor] || valor;
+        }
+
+        function formatarArray(valores) {
+            if (!valores) return 'Não informado';
+            if (Array.isArray(valores)) {
+                return valores.map(v => formatarOpcao(v)).join(', ');
+            }
+            return formatarOpcao(valores);
+        }
+
+        function gerarAlertas() {
+            let alertas = [];
+            
+            if (dadosFormulario.numeroParticipantes === 'acima-50') {
+                alertas.push('🔴 CRÍTICO: Acima de 50 participantes pode exigir registro na CVM');
+            }
+            
+            if (dadosFormulario.tipoInvestidores === 'publico-geral') {
+                alertas.push('🟡 ATENÇÃO: Captação junto ao público geral pode caracterizar oferta pública');
+            }
+            
+            if (dadosFormulario.garantiaRentabilidade === 'sim') {
+                alertas.push('🔴 CRÍTICO: Garantia de rentabilidade pode caracterizar valor mobiliário');
+            }
+            
+            if (dadosFormulario.materialMarketing === 'sim') {
+                alertas.push('🟡 ATENÇÃO: Material publicitário pode caracterizar oferta pública');
+            }
+            
+            if (dadosFormulario.formaCaptacao && Array.isArray(dadosFormulario.formaCaptacao)) {
+                if (dadosFormulario.formaCaptacao.includes('redes-sociais') || 
+                    dadosFormulario.formaCaptacao.includes('material-publicitario')) {
+                    alertas.push('🟡 ATENÇÃO: Captação pública em redes sociais pode exigir registro CVM');
+                }
+            }
+            
+            if (alertas.length === 0) {
+                alertas.push('✅ Estrutura aparenta estar em conformidade inicial');
+            }
+            
+            return alertas.map(alerta => `<p style="margin: 5px 0;">${alerta}</p>`).join('');
+        }
+
+        function gerarProximosPassos() {
+            let passos = [
+                '1. Consulta jurídica especializada em direito societário e mercado de capitais',
+                '2. Análise detalhada de compliance com regulamentação CVM',
+                '3. Estruturação adequada da SCP conforme objetivos específicos',
+                '4. Elaboração de contratos e documentação necessária'
+            ];
+            
+            if (dadosFormulario.prazoInicio === 'imediato') {
+                passos.unshift('⚡ URGENTE: Cliente precisa de atendimento prioritário');
+            }
+            
+            return passos.map(passo => `<p style="margin: 5px 0;">${passo}</p>`).join('');
+        }
+
+        function copiarResumo() {
+            const resumoTexto = document.getElementById('resumoConteudo').innerText;
+            navigator.clipboard.writeText(resumoTexto).then(() => {
+                alert('✅ Resumo copiado para a área de transferência!');
+            }).catch(() => {
+                // Fallback para navegadores mais antigos
+                const textArea = document.createElement('textarea');
+                textArea.value = resumoTexto;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('✅ Resumo copiado para a área de transferência!');
+            });
+        }
+
+        function baixarResumo() {
+            const conteudo = document.getElementById('resumoConteudo').innerHTML;
+            const htmlCompleto = `
+                <!DOCTYPE html>
+                <html lang="pt-BR">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Dimensionamento SCP - ${dadosFormulario.empresaNome || 'Cliente'}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+                        h3, h4 { color: #333; }
+                        p { margin: 8px 0; }
+                        .section { margin-bottom: 20px; }
+                    </style>
+                </head>
+                <body>${conteudo}</body>
+                </html>
+            `;
+            
+            const blob = new Blob([htmlCompleto], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Dimensionamento_SCP_${dadosFormulario.empresaNome || 'Cliente'}_${new Date().toISOString().split('T')[0]}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('💾 Arquivo HTML baixado com sucesso! Você pode abri-lo em qualquer navegador ou imprimir como PDF.');
+        }
+
+        function enviarEmail() {
+            const assunto = `Dimensionamento SCP - ${dadosFormulario.empresaNome || 'Nova Consulta'}`;
+            const corpo = encodeURIComponent(document.getElementById('resumoConteudo').innerText);
+            
+            // Permitir que o usuário configure o email
+            const emailPara = prompt('Digite o email de destino:', '') || '';
+            
+            if (!emailPara) {
+                alert('❌ Email não informado');
+                return;
+            }
+            
+            const linkEmail = `mailto:${emailPara}?subject=${encodeURIComponent(assunto)}&body=${corpo}`;
+            
+            if (linkEmail.length > 2000) {
+                alert('⚠️ Conteúdo muito extenso para email. Use "Copiar Resumo" ou "Baixar PDF" e anexe manualmente.');
+                return;
+            }
+            
+            window.location.href = linkEmail;
+        }
+
+        function novoFormulario() {
+            if (confirm('Tem certeza que deseja limpar o formulário e começar novamente?')) {
+                document.getElementById('dimensionamentoForm').style.display = 'block';
+                document.getElementById('resultado').style.display = 'none';
+                document.getElementById('dimensionamentoForm').reset();
+                window.scrollTo(0, 0);
+            }
+        }
+    </script>
+</body>
+</html>
+"Formulário de dimensionamento SCP"
